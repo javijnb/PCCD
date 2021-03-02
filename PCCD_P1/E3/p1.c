@@ -5,29 +5,36 @@
 #include <string.h>
 
 int Array[63] = {0};
+int control = 0;
+int senal_capturada = 0;
+int senal_TERM = 0;
 
 void sig_handler(int signal){
 
         printf("Se ha capturado la señal con ID - %d\n", signal);
+        senal_capturada = signal;
         Array[signal]=1;
-        int loop=0;
-        fflush(stdout);
+        //int loop=0;
+        //fflush(stdout);
         
 
         if(signal==15){
-                printf("Se ha recibido una señal SIGTERM\n");
-
+                //printf("Se ha recibido una señal SIGTERM\n");
+                /*
                 for(loop = 0; loop<63; loop++){
                         printf("[%d]%d ", loop, Array[loop]);
                 }
-
-                exit(0);
+                */
+                //exit(0);
+                senal_TERM = 1;
         }
 }
 
 
 int main(void){
- 
+
+        int loop2 = 0;
+        /*
        printf("LISTA DE SEÑALES: \n");
        printf("SIGHUP           1\n");
        printf("SIGINT           2\n");
@@ -62,7 +69,7 @@ int main(void){
        printf("SIGPWR          30\n");
        printf("SIGSYS          31\n");
        printf("SIGUNUSED       31\n");
-
+        */
         
         struct sigaction sigact;
         sigact.sa_handler = sig_handler;
@@ -76,6 +83,14 @@ int main(void){
         printf("Proceso main pausado\n");
 
         do{
+                if(senal_TERM==1){
+                        printf("Señal TERM recibida, saliendo...\n");
+                        for(loop2 = 0; loop2<63; loop2++){
+                                printf("[%d]%d ", loop2, Array[loop2]);
+                        }
+                        printf("\n");
+                        exit(0);
+                }
                 pause();
         }while(1);
 

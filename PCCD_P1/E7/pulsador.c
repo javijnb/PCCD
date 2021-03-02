@@ -5,8 +5,13 @@
 
 // Recibe como parámetros numero de señal a enviar y PID del proceso victima
 
+int piso_actual = 0;
+int PISO_MAX=5;
+int PISO_MIN=0;
+
 int main(int argc, char *argv[]){
      printf("Bienvenido al proceso PULSADOR\n");
+     printf("PISO ACTUAL: %d\n", piso_actual);
      int opcion;
      int PID_INT;
      int signal_USR1=10;
@@ -28,16 +33,29 @@ int main(int argc, char *argv[]){
         switch(opcion){
 
             case 1:
-                printf("Ha seleccionado 1: SUBIR\n");
-                kill(PID_ASCENSOR, signal_USR1);
-                printf("\n");
-                break;
+                if(piso_actual==PISO_MAX){
+                    printf("El ascensor se encuentra en el piso más alto (%d), imposible subir\nPor favor introduzca otra operación\n", PISO_MAX);
+                    break;
+                }else{
+                    printf("Ha seleccionado 1: SUBIR\n");
+                    kill(PID_ASCENSOR, signal_USR1);
+                    piso_actual++;
+                    printf("\n");
+                    break;
+                }
 
             case 2:
-                printf("Ha seleccionado 2: BAJAR\n");
-                kill(PID_ASCENSOR, signal_USR2);
-                printf("\n");
-                break;
+                 if(piso_actual==PISO_MIN){
+                    printf("El ascensor se encuentra en el piso más bajo (%d), imposible subir\nPor favor introduzca otra operación\n", PISO_MIN);
+                    break;
+                 }else{
+                    printf("Ha seleccionado 2: BAJAR\n");
+                    kill(PID_ASCENSOR, signal_USR2);
+                    piso_actual--;
+                    printf("\n");
+                    break;
+                 }
+                
 
             case 3:
                 printf("Ha seleccionado 3: SALIR\n");

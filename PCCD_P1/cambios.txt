@@ -1,0 +1,1 @@
+Ejercicio 3: se ha movido el código de prints de los handlers para moverlo al main. Se debería hacer del mismo modo en el resto de ejercicios 
