@@ -6,7 +6,7 @@
 // Recibe como parámetros numero de señal a enviar y PID del proceso victima
 
 int piso_actual = 0;
-int PISO_MAX=5;
+int PISO_MAX=2;
 int PISO_MIN=0;
 
 int main(int argc, char *argv[]){

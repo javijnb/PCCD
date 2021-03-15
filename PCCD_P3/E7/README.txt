@@ -1,0 +1,2 @@
+El primero en llegar al pulsador previo a la SC es el que entra y el que hace esperar al otro proceso hasta que el primero acabe su ejecución en la SC
+Vease la foto en la carpeta para observar un caso de interbloqueo
