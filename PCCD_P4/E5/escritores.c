@@ -41,15 +41,15 @@ int main(int argc,char* argv[]){
 
     switch(opcion){
 
-      case 1:printf("\tIntroduzca el número del escritor (del 1 al %i): ",N3);
+      case 1:
+      printf("\tIntroduzca el número del escritor (del 1 al %i): ",N3);
       scanf("%i",&escritor);
 
-      //sem_post()  increments  (unlocks)  the  semaphore pointed to by sem.  If the semaphore's value consequently becomes greater than zero, then another
-      //process or thread blocked in a sem_wait(3) call will be woken up and proceed to lock the semaphore.
       sem_post(&semaforo_escritura[escritor]);
       break;
 
-      case 2:printf("\tIntroduzca el numero del escritor (del 1 al %i): ",N3);
+      case 2:
+      printf("\tIntroduzca el numero del escritor (del 1 al %i): ",N3);
       scanf("%i",&escritor);
       sem_post(&semaforo_salida[escritor]);
       break;
@@ -68,18 +68,18 @@ void* thread(int* parametro){
   while(1){
     printf("[Escritor %i] -> Esperando a intentar escribir...\n",(int)parametro);
 
-    /*sem_wait() decrements (locks) the semaphore pointed to by sem.  If the semaphore's value is greater than zero, then the decrement proceeds, and the
-       function returns, immediately.  If the semaphore currently has the value zero, then the call blocks until either it becomes possible to perform the
-       decrement (i.e., the semaphore value rises above zero), or a signal handler interrupts the call.*/
   	sem_wait(&semaforo_escritura[(int)parametro]);
 
   	printf("[Escritor %i] -> Intentando escribir...\n",(int)parametro);
+
   	sem_wait(&semaforo);
 
   	printf("[Escritor %i] -> Escribiendo...\n",(int)parametro);
+
   	sem_wait(&semaforo_salida[(int)parametro]);
 
   	printf("[Escritor %i] -> Fin escritura\n",(int)parametro);
+
   	sem_post(&semaforo);
   }
   pthread_exit(NULL);
